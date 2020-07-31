@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "polish",
+  "version": "${version}",
+  "name": "Polish",
+  "description": "An API to help give a clean UI to Minecraft.",
+  "authors": [
+    "DarkKronicle"
+  ],
+  "license": "CC0-1.0",
+  "icon": "assets/Polish/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.darkkronicle.polish.PolishExample"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.9.0+build.204",
+    "fabric": "*",
+    "minecraft": "1.16.1"
+  },
+  "custom": {
+    "modmenu:clientsideOnly": true,
+    "modmenu:api": true
+  }
+}
