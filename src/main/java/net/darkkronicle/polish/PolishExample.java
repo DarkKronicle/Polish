@@ -14,6 +14,7 @@ public class PolishExample implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        // Messing around with the widgets.
         KeyBinding keyBinding = new KeyBinding(
                 "config.advancedchat.key.openlog",
                 InputUtil.Type.KEYSYM,

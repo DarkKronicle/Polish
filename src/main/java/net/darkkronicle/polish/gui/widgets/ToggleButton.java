@@ -69,8 +69,8 @@ public class ToggleButton extends AbstractPWidget {
             border = ColorUtil.blend(borderHover, border, (float) EasingFunctions.Types.SINE_IN.apply(hoverTrans));
         }
 
-        fillRoundedRect(matrices, scaledX, scaledY, scaledWidth, scaledHeight, 5, background.color());
-        outlineRoundedRect(matrices, scaledX, scaledY, scaledWidth, scaledHeight, 5, border.color());
+        fillRoundedRect(matrices, scaledX, scaledY, scaledWidth, scaledHeight, 3, background.color());
+        outlineRoundedRect(matrices, scaledX, scaledY, scaledWidth, scaledHeight, 3, border.color());
         int scaledSmallWidth = Math.round(smallWidth / scale);
         if (wasSelected != selected) {
             transStart = Util.getMeasuringTimeMs();

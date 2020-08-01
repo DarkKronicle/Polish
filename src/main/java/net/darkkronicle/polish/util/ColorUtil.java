@@ -21,8 +21,8 @@ public class ColorUtil {
     /**
      * Turns a packed RGB color into a Color
      *
-     * @param rgb The color to unpack
-     * @return The new Color
+     * @param rgb the color to unpack
+     * @return the new Color
      */
     public SimpleColor intToColor(int rgb) {
         int alpha = rgb >> 24 & 0xFF;
@@ -35,8 +35,8 @@ public class ColorUtil {
     /**
      * Turns a Color into a packed RGB int
      *
-     * @param c The color to pack
-     * @return The packed int
+     * @param c the color to pack
+     * @return the packed int
      */
     public int colorToInt(SimpleColor c) {
         int rgb = c.alpha();
@@ -46,6 +46,15 @@ public class ColorUtil {
         return rgb;
     }
 
+    /**
+     * Fades a {@link SimpleColor}
+     *
+     * @param color     color to fade
+     * @param timeAlive the time alive
+     * @param fadestart tick when the fade starts
+     * @param fadestop  tick when the fade stops
+     * @return the faded color
+     */
     public SimpleColor fade(SimpleColor color, int timeAlive, int fadestart, int fadestop) {
         if (timeAlive <= fadestop) {
             if (timeAlive > fadestart) {
@@ -60,6 +69,14 @@ public class ColorUtil {
         return color;
     }
 
+    /**
+     * Blends two {@link SimpleColor} based off of a percentage.
+     *
+     * @param original   color to start the blend with
+     * @param blend      color that when fully blended, will be this
+     * @param percentage the percentage to blend
+     * @return the simple color
+     */
     public SimpleColor blend(SimpleColor original, SimpleColor blend, float percentage) {
         if (percentage >= 1) {
             return blend;
@@ -74,6 +91,14 @@ public class ColorUtil {
         return new SimpleColor(red, green, blue, alpha);
     }
 
+    /**
+     * Blends two ints together based off of a percent.
+     *
+     * @param start   starting int
+     * @param end     end int
+     * @param percent percent to blend
+     * @return the blended int
+     */
     public int blendInt(int start, int end, float percent) {
         if (percent <= 0) {
             return start;
@@ -82,7 +107,7 @@ public class ColorUtil {
             return end;
         }
         int dif = end - start;
-        int add = (int) Math.round((float) dif * percent);
+        int add = Math.round((float) dif * percent);
         return start + (add);
     }
 

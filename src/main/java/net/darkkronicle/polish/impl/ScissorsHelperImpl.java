@@ -13,19 +13,32 @@ import java.util.ArrayList;
 @Environment(EnvType.CLIENT)
 public class ScissorsHelperImpl implements ScissorsHelper {
 
+    /**
+     * List of scissors that are currently active.
+     */
     private ArrayList<SimpleRectangle> scissors;
 
+    /**
+     * Default constructor. Sets up the scissors list.
+     */
     public ScissorsHelperImpl() {
         scissors = new ArrayList<>();
 
     }
 
+    /**
+     * {@inheritDoc}
+     * @param rect The bounds of the scissor represented in a {@link SimpleRectangle}
+     */
     @Override
     public void addScissor(SimpleRectangle rect) {
         scissors.add(rect);
         apply();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeLastScissor() {
         if (!scissors.isEmpty()) {
@@ -34,6 +47,9 @@ public class ScissorsHelperImpl implements ScissorsHelper {
         apply();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void apply() {
         if (!scissors.isEmpty()) {

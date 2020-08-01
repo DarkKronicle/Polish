@@ -10,20 +10,56 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 
+
+/**
+ * Checkbox Button
+ */
 public class CheckboxButton extends AbstractPWidget {
 
+    /**
+     * Amount of milliseconds that the press animation takes.
+     */
     private int pressAnim = 100;
+    /**
+     * When the press animation starts. -1 means it's done.
+     */
     private float pressStart = -1;
+    /**
+     * Amount of milliseconds that the hover animation takes.
+     */
     private int hoverAnim = 300;
+    /**
+     * When the hover animation starts. -1 means it's done.
+     */
     private float hoverStart = -1;
+    /**
+     * The scale for the finer details. Used for rounding rectangles/smaller
+     */
     private float scale = 0.5F;
+    /**
+     * Is the checkbox selected.
+     */
     @Getter
     @Setter
     private boolean selected;
+    /**
+     * Was the checkbox selected before rendering ends.
+     */
     private boolean wasSelected;
+    /**
+     * How big the checkbox is.
+     */
     @Getter
     private int size;
 
+    /**
+     * Instantiates a new Checkbox button.
+     *
+     * @param x        the x
+     * @param y        the y
+     * @param size     the size (width and height)
+     * @param selected is selected
+     */
     public CheckboxButton(int x, int y, int size, boolean selected) {
         super(x, y, size, size);
         this.selected = selected;
@@ -31,6 +67,9 @@ public class CheckboxButton extends AbstractPWidget {
         this.wasSelected = selected;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         matrices.push();
@@ -80,6 +119,9 @@ public class CheckboxButton extends AbstractPWidget {
         matrices.pop();
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
         selected = !selected;

@@ -11,16 +11,41 @@ import net.minecraft.text.LiteralText;
 import java.util.Map;
 
 
+/**
+ * A selector widget that has a dropdown if clicked in the middle.
+ * //TODO clicks pass through the selector to other widgets.
+ *
+ * @param <K> the type parameter
+ */
 public class DropdownSelectorButton<K> extends SelectorButton<K> {
 
+    /**
+     * Is the dropdown active.
+     */
     private boolean dropdown = false;
+    /**
+     * The Dropdown menu.
+     */
     private SimpleButtonList dropdownMenu;
 
+    /**
+     * Instantiates a new Dropdown selector button.
+     *
+     * @param x               the x
+     * @param y               the y
+     * @param width           the width
+     * @param height          the height
+     * @param arrowWidth      the arrow width
+     * @param backgroundColor the background color
+     */
     public DropdownSelectorButton(int x, int y, int width, int height, int arrowWidth, SimpleColor backgroundColor) {
         super(x, y, width, height, arrowWidth, backgroundColor);
         setDropdownMenu();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         super.renderWidget(matrices, mouseX, mouseY, delta);
@@ -29,6 +54,9 @@ public class DropdownSelectorButton<K> extends SelectorButton<K> {
         }
     }
 
+    /**
+     * Creates the dropdownmenu
+     */
     public void setDropdownMenu() {
         dropdownMenu = new SimpleButtonList(getAbsoluteX() + arrowWidth, getAbsoluteY() + height, width - arrowWidth - arrowWidth, 80);
         for (Map.Entry<K, String> entry : getEntries().entrySet()) {
@@ -36,6 +64,9 @@ public class DropdownSelectorButton<K> extends SelectorButton<K> {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SelectorButton<K> add(K entry, String name) {
         super.add(entry, name);
@@ -43,6 +74,9 @@ public class DropdownSelectorButton<K> extends SelectorButton<K> {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         int relativeX = (int) Math.round(mouseX) - getAbsoluteX();
@@ -64,6 +98,9 @@ public class DropdownSelectorButton<K> extends SelectorButton<K> {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
         if (dropdown) {

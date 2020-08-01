@@ -6,15 +6,41 @@ import net.darkkronicle.polish.util.SimpleColor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 
+/**
+ * The type Color button.
+ */
 public class ColorButton extends AbstractPComplexWidget {
 
+    /**
+     * The red slider button.
+     */
     private IntSliderButton r;
+    /**
+     * The green slider button.
+     */
     private IntSliderButton g;
+    /**
+     * The blue slider button.
+     */
     private IntSliderButton b;
+    /**
+     * The alpha slider button.
+     */
     private IntSliderButton a;
+
     private MinecraftClient client;
+    /**
+     * The background color.
+     */
     private SimpleColor backgroundColor;
 
+    /**
+     * Instantiates a new Color button.
+     *
+     * @param x               the x
+     * @param y               the y
+     * @param backgroundColor the background color
+     */
     public ColorButton(int x, int y, SimpleColor backgroundColor) {
         super(x, y, 120, 50);
         this.client = MinecraftClient.getInstance();
@@ -30,6 +56,11 @@ public class ColorButton extends AbstractPComplexWidget {
         this.backgroundColor = backgroundColor;
     }
 
+    /**
+     * Gets color from all the sliders.
+     *
+     * @return the color
+     */
     public SimpleColor getColor() {
         int rNum = r.getRawValue();
         int gNum = g.getRawValue();
@@ -38,6 +69,9 @@ public class ColorButton extends AbstractPComplexWidget {
         return new SimpleColor(rNum, gNum, bNum, aNum);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         matrices.push();

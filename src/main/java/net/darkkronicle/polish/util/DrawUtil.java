@@ -208,6 +208,10 @@ public abstract class DrawUtil {
         textRenderer.drawWithShadow(matrices, stringRenderable, (float)(x - textRenderer.getWidth(stringRenderable) / 2), (float)y, color);
     }
 
+    public static void drawText(MatrixStack matrices, TextRenderer textRenderer, StringRenderable stringRenderable, int x, int y, int color) {
+        textRenderer.drawWithShadow(matrices, stringRenderable, x, (float)y, color);
+    }
+
     public static void drawRightText(MatrixStack matrices, TextRenderer textRenderer, StringRenderable stringRenderable, int x, int y, int color) {
         textRenderer.drawWithShadow(matrices, stringRenderable, (float) (x - textRenderer.getWidth(stringRenderable)), (float)y, color);
     }

@@ -14,25 +14,50 @@ import net.minecraft.text.Text;
 @Environment(EnvType.CLIENT)
 public class ToggleEntry extends AbstractPEntry<Boolean, ToggleButton> {
 
-    private ToggleEntry(int relativeX, int relativeY, int width, int height, ToggleButton widget, Text name, EntryButtonList list) {
+    protected ToggleEntry(int relativeX, int relativeY, int width, int height, ToggleButton widget, Text name, EntryButtonList list) {
         super(relativeX, relativeY, width, height, widget, name, list);
     }
 
     @Override
     public void renderEntry(MatrixStack matrices, int index, int mouseX, int mouseY, float tickDelta, SimpleRectangle bounds, int scrolled, boolean hovered) {
         widget.setRelativePos(originalRelativeX + 2, originalRelativeY + scrolled);
+        relativeX = originalRelativeX + 2;
+        relativeY = originalRelativeY + scrolled;
         if (hovered) {
             widget.render(matrices, mouseX, mouseY, tickDelta);
         } else {
             widget.render(matrices, mouseX, mouseY, tickDelta, false);
         }
-        DrawUtil.drawRightText(matrices, client.textRenderer, name, list.getAbsoluteX() + this.width - 6, widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
+        DrawUtil.drawRightText(matrices, client.textRenderer, name, parentList.getAbsoluteX() + relativeX + this.width - 6, widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
     }
 
     public static void addToList(EntryButtonList list, ToggleButton button, Text name) {
-        ToggleEntry check = new ToggleEntry(0, list.lastY, list.getWidth(), button.getHeight(), new ToggleButton(list.getAbsoluteX(), list.getAbsoluteY(), button.getWidth(), button.getHeight(), button.isSelected()), name, list);
+        addToList(list, button, name, 0);
+    }
+
+    public static void addToList(EntryButtonList list, ToggleButton button, Text name, int column) {
+        ToggleEntry check;
+        int col = column;
+        if (list.getColumnCount() <= 1) {
+            check = new ToggleEntry(0, list.lastY, list.getWidth(), button.getHeight(), new ToggleButton(list.getAbsoluteX(), list.getAbsoluteY(), button.getWidth(), button.getHeight(), button.isSelected()), name, list);
+        } else {
+            if (col == 0) {
+                col = list.incrementColumn();
+            }
+            int last = col - 1;
+            int start;
+            if (last == 0) {
+                start = 0;
+            } else {
+                start = Math.round((float) list.getWidth() / list.getColumnCount() * last);
+            }
+            int endWidth = Math.round((float) list.getWidth() / list.getColumnCount() * col) - start;
+            check = new ToggleEntry(start, list.lastY, endWidth, button.getHeight(), new ToggleButton(list.getAbsoluteX(), list.getAbsoluteY(), button.getWidth(), button.getHeight(), button.isSelected()), name, list);
+        }
         list.addEntry(check);
-        list.lastY = list.lastY + check.getHeight();
+        if (list.getColumnCount() == 1 || col == 1) {
+            list.lastY = list.lastY + check.getHeight();
+        }
     }
 
     @Override

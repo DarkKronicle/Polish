@@ -25,6 +25,10 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+
+/**
+ * Textbox button. Based off of Minecraft's {@link net.minecraft.client.gui.widget.TextFieldWidget}
+ */
 public class TextboxButton extends AbstractPWidget {
 
     private final TextRenderer textRenderer;

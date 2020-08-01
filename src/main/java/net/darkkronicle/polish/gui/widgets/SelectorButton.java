@@ -15,24 +15,78 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A Selector Button
+ *
+ * @param <K> type that the selector takes in
+ */
 public class SelectorButton<K> extends AbstractPWidget {
+    /**
+     * The entries in the selector.
+     */
     @Getter
     private LinkedHashMap<K, String> entries;
+    /**
+     * The current entry that is selected.
+     */
     @Setter
     private Map.Entry<K, String> current;
+    /**
+     * How big the arrows are for rendering.
+     */
     public int arrowWidth;
+    /**
+     * The background color.
+     */
     private SimpleColor backgroundColor;
+    /**
+     * The scale used for finer details.
+     */
     private float scale = 0.5F;
+    /**
+     * How long the hover animation takes in milliseconds.
+     */
     private int hoverAnim = 300;
+    /**
+     * When the left side animation started. If -1 it's done.
+     */
     private float leftAStart = -1;
+    /**
+     * When the right side animation started. If -1 it's done.
+     */
     private float rightAStart = -1;
+    /**
+     * When the full hover animation started. If -1 it's done.
+     */
     private float allStart = -1;
 
+    /**
+     * If the left is hovered.
+     */
     private boolean leftHover = false;
+    /**
+     * If the right is hovered.
+     */
     private boolean rightHover = false;
+    /**
+     * If the left was hovered before it finished rendering.
+     */
     private boolean wasLeftHover = false;
+    /**
+     * If the right was hovered before it finished rendering.
+     */
     private boolean wasRightHover = false;
 
+    /**
+     * Instantiates a new Selector button.
+     *
+     * @param x               the x
+     * @param y               the y
+     * @param width           the width
+     * @param height          the height
+     * @param arrowWidth      the arrow width
+     * @param backgroundColor the background color
+     */
     public SelectorButton(int x, int y, int width, int height, int arrowWidth, SimpleColor backgroundColor) {
         super(x, y, width, height);
         entries = new LinkedHashMap<>();
@@ -40,11 +94,21 @@ public class SelectorButton<K> extends AbstractPWidget {
         this.backgroundColor = backgroundColor;
     }
 
+    /**
+     * Add new entry to the selector button.
+     *
+     * @param entry the entry
+     * @param name  the name
+     * @return the selector button
+     */
     public SelectorButton<K> add(K entry, String name) {
         entries.put(entry, name);
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         matrices.push();
@@ -135,6 +199,11 @@ public class SelectorButton<K> extends AbstractPWidget {
         wasRightHover = rightHover;
     }
 
+    /**
+     * Next value in entries.
+     *
+     * @return the next entry
+     */
     public Map.Entry<K, String> next() {
         List<K> keys = new ArrayList<>(entries.keySet());
         int index = keys.indexOf(current.getKey());
@@ -143,6 +212,12 @@ public class SelectorButton<K> extends AbstractPWidget {
         return current;
     }
 
+    /**
+     * Gets an entry from an object K
+     *
+     * @param key the key
+     * @return the entry found. If none, current
+     */
     public Map.Entry<K, String> entryFromObj(K key) {
         for (Map.Entry<K, String> next : entries.entrySet()) {
             if (next.getKey().equals(key)) {
@@ -152,6 +227,11 @@ public class SelectorButton<K> extends AbstractPWidget {
         return current;
     }
 
+    /**
+     * Previous value in entries.
+     *
+     * @return the previous entry
+     */
     public Map.Entry<K, String> previous() {
         List<K> keys = new ArrayList<>(entries.keySet());
         int index = keys.indexOf(current.getKey());
@@ -160,10 +240,18 @@ public class SelectorButton<K> extends AbstractPWidget {
         return current;
     }
 
+    /**
+     * Gets the current entry.
+     *
+     * @return the current entry
+     */
     public Map.Entry<K, String> getCurrent() {
         return current;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         int relativeX = (int) Math.round(mouseX) - getAbsoluteX();
