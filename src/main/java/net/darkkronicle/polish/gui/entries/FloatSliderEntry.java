@@ -14,6 +14,9 @@ import net.minecraft.text.Text;
 @Environment(EnvType.CLIENT)
 public class FloatSliderEntry extends AbstractPEntry<Float, FloatSliderButton> {
 
+
+    private final boolean right = true;
+
     protected FloatSliderEntry(int relativeX, int relativeY, int width, int height, FloatSliderButton widget, Text name, EntryButtonList list) {
         super(relativeX, relativeY, width, height, widget, name, list);
     }
@@ -28,14 +31,18 @@ public class FloatSliderEntry extends AbstractPEntry<Float, FloatSliderButton> {
         } else {
             widget.render(matrices, mouseX, mouseY, tickDelta, false);
         }
-        DrawUtil.drawRightText(matrices, client.textRenderer, name, parentList.getAbsoluteX() + relativeX + this.width - 6, widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
+        if (right) {
+            DrawUtil.drawRightText(matrices, client.textRenderer, name, parentList.getAbsoluteX() + relativeX + this.width - 6, widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
+        } else {
+            DrawUtil.drawText(matrices, client.textRenderer, name, parentList.getAbsoluteX() + relativeX + 20 + widget.getWidth(), widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
+        }
     }
 
-    public static void addToList(EntryButtonList list, FloatSliderButton button, Text name) {
-        addToList(list, button, name, 0);
+    public static FloatSliderEntry createEntry(EntryButtonList list, FloatSliderButton button, Text name) {
+        return createEntry(list, button, name, 0);
     }
 
-    public static void addToList(EntryButtonList list, FloatSliderButton button, Text name, int column) {
+    public static FloatSliderEntry createEntry(EntryButtonList list, FloatSliderButton button, Text name, int column) {
         FloatSliderEntry check;
         int col = column;
         if (list.getColumnCount() <= 1) {
@@ -54,15 +61,16 @@ public class FloatSliderEntry extends AbstractPEntry<Float, FloatSliderButton> {
             int endWidth = Math.round((float) list.getWidth() / list.getColumnCount() * col) - start;
             check = new FloatSliderEntry(start, list.lastY, endWidth, button.getHeight(), new FloatSliderButton(list.getAbsoluteX(), list.getAbsoluteY(), button.getWidth(), button.getRawValue(), button.getMin(), button.getMax()), name, list);
         }
-        list.addEntry(check);
+     //   list.addEntry(check);
         if (list.getColumnCount() == 1 || col == 1) {
             list.lastY = list.lastY + check.getHeight();
         }
+        return check;
     }
 
     @Override
     public int getHeight() {
-        return height + 3;
+        return height + 5;
     }
 
 

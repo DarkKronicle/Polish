@@ -187,8 +187,7 @@ public abstract class AbstractPWidget extends DrawUtil implements Drawable, Elem
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == 0 && hovered) {
-            onClick(mouseX, mouseY, button);
-            return true;
+            return onClick(mouseX, mouseY, button);
         }
         return false;
     }
@@ -249,8 +248,8 @@ public abstract class AbstractPWidget extends DrawUtil implements Drawable, Elem
      * @param mouseY the mouse y
      * @param button the button
      */
-    public void onClick(double mouseX, double mouseY, int button) {
-
+    public boolean onClick(double mouseX, double mouseY, int button) {
+        return false;
     }
 
     /**

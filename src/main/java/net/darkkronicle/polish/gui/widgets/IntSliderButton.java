@@ -22,6 +22,7 @@ public class IntSliderButton extends SliderButton<Integer> {
         this.value = value;
         this.min = min;
         this.max = max;
+        this.value = MathHelper.clamp(this.value, this.min, this.max);
     }
 
     /**

@@ -1,8 +1,11 @@
 package net.darkkronicle.polish.gui.complexwidgets;
 
+import lombok.Getter;
 import net.darkkronicle.polish.api.ScissorsHelper;
 import net.darkkronicle.polish.gui.widgets.AbstractPWidget;
 import net.darkkronicle.polish.util.Colors;
+import net.darkkronicle.polish.util.DrawPosition;
+import net.darkkronicle.polish.util.ScrollUtil;
 import net.darkkronicle.polish.util.SimpleRectangle;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -31,7 +34,10 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
     /**
      * The entries made up of the list.
      */
+    @Getter
     private ArrayList<Entry> entries = new ArrayList<>();
+
+    private ScrollUtil scrollUtil;
 
     /**
      * Instantiates a new AbstractPListWidget
@@ -43,6 +49,7 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
      */
     public AbstractPWidgetList(int x, int y, int width, int height) {
         super(x, y, width, height);
+        scrollUtil = new ScrollUtil(100, scroll, 10, new SimpleRectangle(getAbsoluteX() + width - 4, getAbsoluteY(), 4, height));
     }
 
     /**
@@ -59,11 +66,17 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
      */
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        matrices.push();
         hovered = calcHover(mouseX, mouseY);
         renderWidget(matrices, mouseX, mouseY, delta);
-        int scrolled = -1 * (int) Math.round(scroll);
-        double scrollAmount = (scroll / (Math.max(scrollMax - 16, 16)));
-        rect(matrices, getAbsoluteX() + width - 4, getAbsoluteY() + (int) Math.round(height * scrollAmount), 4, 8, Colors.WHITE.color().withAlpha(100).color());
+//        int scrolled = -1 * (int) Math.round(scroll);
+//        double scrollAmount = MathHelper.clamp((scroll / (Math.max(scrollMax, 1))), 0, 1);
+//        rect(matrices, getAbsoluteX() + width - 4, (getAbsoluteY() + (int) Math.round((height - 8) * scrollAmount)), 4, 8, Colors.WHITE.color().withAlpha(100).color());
+        scrollUtil.setMaxScroll(Math.max(scrollMax, 1));
+        scrollUtil.updateScroll();
+        int scrolled = -1 * scrollUtil.getScroll();
+        DrawPosition pos = scrollUtil.getScrollPos();
+        rect(matrices, pos.getX(), pos.getY(), 4, 8, Colors.WHITE.color().withAlpha(100).color());
         int currenty = scrolled;
         ScissorsHelper.INSTANCE.addScissor(new SimpleRectangle(getAbsoluteX() + 2, getAbsoluteY() + 2, width - 2, height - 2));
         for (int i = 0; i < entries.size(); i++) {
@@ -75,6 +88,31 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
         }
         wasHovered = hovered;
         ScissorsHelper.INSTANCE.removeLastScissor();
+        matrices.pop();
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (hovered) {
+            for (Entry entry : entries) {
+                if (entry.keyPressed(keyCode, scanCode, modifiers)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean charTyped(char chr, int keyCode) {
+        if (hovered) {
+            for (Entry entry : entries) {
+                if (entry.charTyped(chr, keyCode)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -85,7 +123,9 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
         if (button == 0 && hovered) {
             onClick(mouseX, mouseY, button);
             for (Entry entry : entries) {
-                entry.mouseClicked(mouseX, mouseY, button);
+                if (entry.mouseClicked(mouseX, mouseY, button)) {
+                    return true;
+                }
             }
             return true;
         }
@@ -114,6 +154,7 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
     public void onScroll(double mouseX, double mouseY, double amount) {
         scroll = scroll + (amount * -2);
         scroll = MathHelper.clamp(scroll, 0, scrollMax);
+        scrollUtil.scrollTo(scroll * -1);
     }
 
     /**
@@ -202,6 +243,7 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
             if (button == 0 && widget.isHovered()) {
                 widget.onClick(mouseX, mouseY, button);
+                return true;
             }
             return false;
         }
@@ -235,6 +277,20 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
             if (widget.isHovered()) {
                 widget.onScroll(mouseX, mouseY, amount);
                 return true;
+            }
+            return false;
+        }
+
+        public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+            if (widget.isHovered()) {
+                return widget.keyPressed(keyCode, scanCode, modifiers);
+            }
+            return false;
+        }
+
+        public boolean charTyped(char chr, int keyCode) {
+            if (widget.isHovered()) {
+                return widget.charTyped(chr, keyCode);
             }
             return false;
         }

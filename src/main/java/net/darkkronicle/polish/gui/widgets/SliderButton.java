@@ -145,8 +145,9 @@ public abstract class SliderButton<K> extends AbstractPWidget {
      * {@inheritDoc}
      */
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
+    public boolean onClick(double mouseX, double mouseY, int button) {
         setValueFromMouse(mouseX);
+        return true;
     }
 
 

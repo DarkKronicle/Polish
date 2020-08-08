@@ -14,6 +14,8 @@ import net.minecraft.text.Text;
 @Environment(EnvType.CLIENT)
 public class CheckboxEntry extends AbstractPEntry<Boolean, CheckboxButton> {
 
+    private final boolean right = true;
+
     protected CheckboxEntry(int relativeX, int relativeY, int width, int height, CheckboxButton widget, Text name, EntryButtonList list) {
         super(relativeX, relativeY, width, height, widget, name, list);
     }
@@ -28,14 +30,18 @@ public class CheckboxEntry extends AbstractPEntry<Boolean, CheckboxButton> {
         } else {
             widget.render(matrices, mouseX, mouseY, tickDelta, false);
         }
-        DrawUtil.drawRightText(matrices, client.textRenderer, name, parentList.getAbsoluteX() + relativeX + this.width - 6, widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
+        if (right) {
+            DrawUtil.drawRightText(matrices, client.textRenderer, name, parentList.getAbsoluteX() + relativeX + this.width - 6, widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
+        } else {
+            DrawUtil.drawText(matrices, client.textRenderer, name, parentList.getAbsoluteX() + relativeX + 20 + widget.getWidth(), widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
+        }
     }
 
-    public static void addToList(EntryButtonList list, CheckboxButton button, Text name) {
-        addToList(list, button, name, 0);
+    public static CheckboxEntry createEntry(EntryButtonList list, CheckboxButton button, Text name) {
+        return createEntry(list, button, name, 0);
     }
 
-    public static void addToList(EntryButtonList list, CheckboxButton button, Text name, int column) {
+    public static CheckboxEntry createEntry(EntryButtonList list, CheckboxButton button, Text name, int column) {
         CheckboxEntry check;
         int col = column;
         if (list.getColumnCount() <= 1) {
@@ -54,16 +60,17 @@ public class CheckboxEntry extends AbstractPEntry<Boolean, CheckboxButton> {
             int endWidth = Math.round((float) list.getWidth() / list.getColumnCount() * col) - start;
             check = new CheckboxEntry(start, list.lastY, endWidth, button.getHeight(), new CheckboxButton(list.getAbsoluteX(), list.getAbsoluteY(), button.getSize(), button.isSelected()), name, list);
         }
-        list.addEntry(check);
+      //  list.addEntry(check);
         if (list.getColumnCount() == 1 || col == 1) {
             list.lastY = list.lastY + check.getHeight();
         }
+        return check;
     }
 
 
     @Override
     public int getHeight() {
-        return height + 3;
+        return height + 5;
     }
 
     @Override

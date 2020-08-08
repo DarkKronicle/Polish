@@ -121,8 +121,9 @@ public class SimpleButton extends AbstractPWidget {
      * {@inheritDoc}
      */
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
+    public boolean onClick(double mouseX, double mouseY, int button) {
         onPress.onPress(this);
+        return true;
     }
 
     /**

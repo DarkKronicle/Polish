@@ -25,6 +25,7 @@ public class FloatSliderButton extends SliderButton<Float> {
         this.value = value;
         this.min = min;
         this.max = max;
+        this.value = MathHelper.clamp(this.value, this.min, this.max);
     }
 
     /**

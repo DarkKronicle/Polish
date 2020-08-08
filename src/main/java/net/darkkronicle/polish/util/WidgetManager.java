@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.ParentElement;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * Once you have one created you tap into {@link Screen} and on render call there method.
  */
 @Environment(EnvType.CLIENT)
-public class WidgetManager {
+public class WidgetManager implements Element, Drawable {
 
     /**
      * The stored widgets.
@@ -71,6 +72,7 @@ public class WidgetManager {
      * @param mouseX   the mouse x
      * @param mouseY   the mouse y
      */
+    @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         for (Drawable d : widgets) {
             d.render(matrices, mouseX, mouseY, delta);
@@ -98,6 +100,7 @@ public class WidgetManager {
      * @param amount the amount
      * @return the boolean
      */
+    @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
         boolean isTrue = false;
         for (Drawable widget : widgets) {

@@ -347,7 +347,8 @@ public class TextboxButton extends AbstractPWidget {
         }
     }
 
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    @Override
+    public boolean onClick(double mouseX, double mouseY, int button) {
         if (!this.isVisible()) {
             return false;
         } else {

@@ -23,6 +23,11 @@ public interface ConfigurableEntry<V> {
     void save();
 
     /**
+     * Resets the entry to the default value.
+     */
+    void reset();
+
+    /**
      * Returns the default value of the entry. Returns currentvalue if no supplier set.
      * @return Default value.
      */

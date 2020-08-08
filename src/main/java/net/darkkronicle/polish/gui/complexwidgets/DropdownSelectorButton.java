@@ -8,7 +8,9 @@ import net.darkkronicle.polish.util.SimpleColor;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 
+import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -50,6 +52,7 @@ public class DropdownSelectorButton<K> extends SelectorButton<K> {
     public void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         super.renderWidget(matrices, mouseX, mouseY, delta);
         if (dropdown) {
+            dropdownMenu.setRelativePos(arrowWidth, height);
             dropdownMenu.render(matrices, mouseX, mouseY, delta);
         }
     }
@@ -58,7 +61,8 @@ public class DropdownSelectorButton<K> extends SelectorButton<K> {
      * Creates the dropdownmenu
      */
     public void setDropdownMenu() {
-        dropdownMenu = new SimpleButtonList(getAbsoluteX() + arrowWidth, getAbsoluteY() + height, width - arrowWidth - arrowWidth, 80);
+        dropdownMenu = new SimpleButtonList(getAbsoluteX(), getAbsoluteY(), width - arrowWidth - arrowWidth, 80);
+        dropdownMenu.setRelativePos(arrowWidth, height);
         for (Map.Entry<K, String> entry : getEntries().entrySet()) {
             dropdownMenu.addEntry(new SimpleButton(0, 0, width, 19, Colors.DARKGRAY.color().withAlpha(100), ColorUtil.blend(Colors.DARKGRAY.color().withAlpha(100), Colors.WHITE.color(), 0.4F), Colors.BLACK.color(), new LiteralText(entry.getValue()), button -> setCurrent(entry)));
         }
@@ -78,7 +82,7 @@ public class DropdownSelectorButton<K> extends SelectorButton<K> {
      * {@inheritDoc}
      */
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean onClick(double mouseX, double mouseY, int button) {
         int relativeX = (int) Math.round(mouseX) - getAbsoluteX();
         int relativeY = (int) Math.round(mouseY) - getAbsoluteY();
         if (relativeX >= 0 && relativeX <= arrowWidth + 2 && relativeY >= 0 && relativeY <= height) {
@@ -91,9 +95,18 @@ public class DropdownSelectorButton<K> extends SelectorButton<K> {
         }
         if (relativeX > arrowWidth + 2 && relativeX < width - arrowWidth - 2 && relativeY >= 0 && relativeY <= height) {
             dropdown = !dropdown;
+            return true;
         }
         if (dropdown) {
-            dropdownMenu.mouseClicked(mouseX, mouseY, button);
+            return dropdownMenu.mouseClicked(mouseX, mouseY, button);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button == 0) {
+            return onClick(mouseX, mouseY, button);
         }
         return false;
     }
@@ -108,4 +121,5 @@ public class DropdownSelectorButton<K> extends SelectorButton<K> {
         }
         return false;
     }
+
 }

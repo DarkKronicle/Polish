@@ -66,6 +66,7 @@ public class AbstractPComplexWidget extends AbstractPWidget {
             for (AbstractPWidget sibling : siblings) {
                 if (sibling.isHovered()) {
                     sibling.onClick(mouseX, mouseY, button);
+                    return true;
                 }
             }
             return true;

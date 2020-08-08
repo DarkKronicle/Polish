@@ -2,22 +2,21 @@ package net.darkkronicle.polish.gui.entries;
 
 import net.darkkronicle.polish.api.AbstractPEntry;
 import net.darkkronicle.polish.gui.complexwidgets.EntryButtonList;
-import net.darkkronicle.polish.gui.widgets.IntSliderButton;
+import net.darkkronicle.polish.gui.widgets.FloatSliderButton;
+import net.darkkronicle.polish.gui.widgets.TextboxButton;
 import net.darkkronicle.polish.util.Colors;
 import net.darkkronicle.polish.util.DrawUtil;
 import net.darkkronicle.polish.util.SimpleRectangle;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
-@Environment(EnvType.CLIENT)
-public class IntSliderEntry extends AbstractPEntry<Integer, IntSliderButton> {
+public class TextboxEntry extends AbstractPEntry<String, TextboxButton> {
 
-    private final boolean right = true;
+    private boolean right = true;
 
-    protected IntSliderEntry(int relativeX, int relativeY, int width, int height, IntSliderButton widget, Text name, EntryButtonList list) {
-        super(relativeX, relativeY, width, height, widget, name, list);
+    public TextboxEntry(int relativeX, int relativeY, int width, int height, TextboxButton widget, Text name, EntryButtonList parentList) {
+        super(relativeX, relativeY, width, height, widget, name, parentList);
     }
 
     @Override
@@ -37,15 +36,30 @@ public class IntSliderEntry extends AbstractPEntry<Integer, IntSliderButton> {
         }
     }
 
-    public static IntSliderEntry createEntry(EntryButtonList list, IntSliderButton button, Text name) {
+    @Override
+    public int getHeight() {
+        return widget.getHeight() + 3;
+    }
+
+    @Override
+    public String getValue() {
+        return widget.getText();
+    }
+
+    @Override
+    public void setValue(String value) {
+        widget.setText(value);
+    }
+
+    public static TextboxEntry createEntry(EntryButtonList list, TextboxButton button, Text name) {
         return createEntry(list, button, name, 0);
     }
 
-    public static IntSliderEntry createEntry(EntryButtonList list, IntSliderButton button, Text name, int column) {
-        IntSliderEntry check;
+    public static TextboxEntry createEntry(EntryButtonList list, TextboxButton button, Text name, int column) {
+        TextboxEntry check;
         int col = column;
         if (list.getColumnCount() <= 1) {
-            check = new IntSliderEntry(0, list.lastY, list.getWidth(), button.getHeight(), new IntSliderButton(list.getAbsoluteX(), list.getAbsoluteY(), button.getWidth(), button.getRawValue(), button.getMin(), button.getMax()), name, list);
+            check = new TextboxEntry(0, list.lastY, list.getWidth(), button.getHeight(), new TextboxButton(MinecraftClient.getInstance().textRenderer, list.getAbsoluteX(), list.getAbsoluteY(), button.getWidth(), button.getHeight(), Colors.DARKGRAY.color().withAlpha(100), true), name, list);
         } else {
             if (col == 0) {
                 col = list.incrementColumn();
@@ -58,28 +72,12 @@ public class IntSliderEntry extends AbstractPEntry<Integer, IntSliderButton> {
                 start = Math.round((float) list.getWidth() / list.getColumnCount() * last);
             }
             int endWidth = Math.round((float) list.getWidth() / list.getColumnCount() * col) - start;
-            check = new IntSliderEntry(start, list.lastY, endWidth, button.getHeight(), new IntSliderButton(list.getAbsoluteX(), list.getAbsoluteY(), button.getWidth(), button.getRawValue(), button.getMin(), button.getMax()), name, list);
+            check = new TextboxEntry(start, list.lastY, endWidth, button.getHeight(), new TextboxButton(MinecraftClient.getInstance().textRenderer, list.getAbsoluteX(), list.getAbsoluteY(), button.getWidth(), button.getHeight(), Colors.DARKGRAY.color().withAlpha(100), true), name, list);
         }
-     //   list.addEntry(check);
+        //   list.addEntry(check);
         if (list.getColumnCount() == 1 || col == 1) {
             list.lastY = list.lastY + check.getHeight();
         }
         return check;
-    }
-
-    @Override
-    public int getHeight() {
-        return height + 5;
-    }
-
-
-    @Override
-    public Integer getValue() {
-        return widget.getRawValue();
-    }
-
-    @Override
-    public void setValue(Integer value) {
-        widget.setRawValue(value);
     }
 }

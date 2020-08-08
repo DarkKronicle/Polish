@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A Selector Button
@@ -38,6 +39,7 @@ public class SelectorButton<K> extends AbstractPWidget {
     /**
      * The background color.
      */
+    @Getter
     private SimpleColor backgroundColor;
     /**
      * The scale used for finer details.
@@ -237,6 +239,7 @@ public class SelectorButton<K> extends AbstractPWidget {
         int index = keys.indexOf(current.getKey());
         int newindex = index - 1 < 0 ? keys.size() - 1 : index - 1;
         current = entryFromObj(keys.get(newindex));
+        System.out.println(current.getValue());
         return current;
     }
 
@@ -253,7 +256,7 @@ public class SelectorButton<K> extends AbstractPWidget {
      * {@inheritDoc}
      */
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean onClick(double mouseX, double mouseY, int button) {
         int relativeX = (int) Math.round(mouseX) - getAbsoluteX();
         int relativeY = (int) Math.round(mouseY) - getAbsoluteY();
         if (relativeX >= 0 && relativeX <= arrowWidth + 2 && relativeY >= 0 && relativeY <= height) {
@@ -266,4 +269,21 @@ public class SelectorButton<K> extends AbstractPWidget {
         }
         return false;
     }
+
+    public Set<Map.Entry<K, String>> getEntrySet() {
+        return getEntries().entrySet();
+    }
+
+    public SelectorButton<K> add(Map.Entry<K, String> entry) {
+        add(entry.getKey(), entry.getValue());
+        return this;
+    }
+
+    public SelectorButton<K> addSet(Set<Map.Entry<K, String>> sets) {
+        for (Map.Entry<K, String> set : sets) {
+            add(set);
+        }
+        return this;
+    }
+
 }

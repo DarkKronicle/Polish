@@ -123,7 +123,8 @@ public class CheckboxButton extends AbstractPWidget {
      *  {@inheritDoc}
      */
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
+    public boolean onClick(double mouseX, double mouseY, int button) {
         selected = !selected;
+        return true;
     }
 }

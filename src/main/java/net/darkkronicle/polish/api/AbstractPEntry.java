@@ -1,6 +1,8 @@
 package net.darkkronicle.polish.api;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import net.darkkronicle.polish.gui.complexwidgets.AbstractPWidgetList;
 import net.darkkronicle.polish.gui.complexwidgets.EntryButtonList;
 import net.darkkronicle.polish.gui.widgets.AbstractPWidget;
@@ -23,7 +25,9 @@ import java.util.function.Supplier;
  */
 @Environment(EnvType.CLIENT)
 public abstract class AbstractPEntry<V, W extends AbstractPWidget> extends AbstractPWidgetList.Entry<AbstractPEntry<V, W>> implements ConfigurableEntry<V>  {
+   @Getter @Setter
    private Supplier<V> defaultValue;
+   @Getter @Setter
    private Consumer<V> saveable;
    protected Text name;
    protected final W widget;
@@ -48,21 +52,6 @@ public abstract class AbstractPEntry<V, W extends AbstractPWidget> extends Abstr
       this.parentList = parentList;
    }
 
-   /**
-    * Gets the supplier that gets the default value.
-    * @return Supplier that gets the default value.
-    */
-   public Supplier<V> getDefaultValue() {
-      return defaultValue;
-   }
-
-   /**
-    * Gets the consumer that saves the value.
-    * @return The consumer that saves the value.
-    */
-   public Consumer<V> getSaveable() {
-      return saveable;
-   }
 
    /**
     * {@inheritDoc}
@@ -71,6 +60,17 @@ public abstract class AbstractPEntry<V, W extends AbstractPWidget> extends Abstr
    public void save() {
       if (saveable != null) {
          saveable.accept(getValue());
+      }
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public void reset() {
+      V newval = getDefault();
+      if (newval != getValue()) {
+         setValue(newval);
       }
    }
 

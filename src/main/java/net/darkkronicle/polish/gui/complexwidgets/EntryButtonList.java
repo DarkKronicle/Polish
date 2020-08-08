@@ -3,6 +3,7 @@ package net.darkkronicle.polish.gui.complexwidgets;
 import lombok.Getter;
 import net.darkkronicle.polish.api.AbstractPEntry;
 import net.darkkronicle.polish.util.Colors;
+import net.darkkronicle.polish.util.ScrollUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
@@ -102,5 +103,21 @@ public class EntryButtonList extends AbstractPWidgetList<AbstractPEntry> {
             outlineRoundedRect(matrices, scaledX, scaledY, scaledWidth, scaledHeight, 9, Colors.BLACK.color().withAlpha(200).color());
         }
         matrices.pop();
+    }
+
+    public void reset() {
+        for (Entry entry : getEntries()) {
+            if (entry instanceof AbstractPEntry) {
+                ((AbstractPEntry) entry).reset();
+            }
+        }
+    }
+
+    public void save() {
+        for (Entry entry : getEntries()) {
+            if (entry instanceof AbstractPEntry) {
+                ((AbstractPEntry) entry).save();
+            }
+        }
     }
 }
