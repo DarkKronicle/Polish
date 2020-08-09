@@ -12,7 +12,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "net.darkkronicle.polish.PolishExample"
+      "io.github.darkkronicle.polish.PolishExample"
     ]
   },
   "depends": {
