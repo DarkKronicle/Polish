@@ -82,4 +82,12 @@ public class IntSliderEntry extends AbstractPEntry<Integer, IntSliderButton> {
     public void setValue(Integer value) {
         widget.setRawValue(value);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getWidth() {
+        return width;
+    }
 }

@@ -83,4 +83,12 @@ public class FloatSliderEntry extends AbstractPEntry<Float, FloatSliderButton> {
     public void setValue(Float value) {
         widget.setRawValue(value);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getWidth() {
+        return width;
+    }
 }

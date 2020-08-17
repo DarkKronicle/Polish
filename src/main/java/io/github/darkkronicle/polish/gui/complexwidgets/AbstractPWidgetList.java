@@ -25,7 +25,7 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
     /**
      * Current scroll.
      */
-    private double scroll = 0;
+    protected double scroll = 0;
     /**
      * How far you can scroll.
      */
@@ -35,9 +35,9 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
      * The entries made up of the list.
      */
     @Getter
-    private ArrayList<Entry> entries = new ArrayList<>();
+    protected ArrayList<Entry> entries = new ArrayList<>();
 
-    private ScrollUtil scrollUtil;
+    protected ScrollUtil scrollUtil;
 
     /**
      * Instantiates a new AbstractPListWidget
@@ -69,9 +69,6 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
         matrices.push();
         hovered = calcHover(mouseX, mouseY);
         renderWidget(matrices, mouseX, mouseY, delta);
-//        int scrolled = -1 * (int) Math.round(scroll);
-//        double scrollAmount = MathHelper.clamp((scroll / (Math.max(scrollMax, 1))), 0, 1);
-//        rect(matrices, getAbsoluteX() + width - 4, (getAbsoluteY() + (int) Math.round((height - 8) * scrollAmount)), 4, 8, Colors.WHITE.color().withAlpha(100).color());
         scrollUtil.setMaxScroll(Math.max(scrollMax, 1));
         scrollUtil.updateScroll();
         int scrolled = -1 * scrollUtil.getScroll();
@@ -162,7 +159,7 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
      *
      * @param <E> the type of entry
      */
-    public abstract static class Entry<E extends AbstractPWidgetList.Entry> {
+    public abstract static class Entry<E extends AbstractPWidgetList.Entry<?>> {
         /**
          * The widget that will render/interact with.
          */
@@ -231,6 +228,13 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
          * @return the height
          */
         public abstract int getHeight();
+
+        /**
+         * Gets width.
+         *
+         * @return the width
+         */
+        public abstract int getWidth();
 
         /**
          * Mouse clicked

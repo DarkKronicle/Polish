@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Value;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * Immutable class that stores a rectangle.
  */
@@ -12,7 +14,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @AllArgsConstructor
-public class SimpleRectangle {
+public class SimpleRectangle implements Serializable {
+    private static final long serialVersionUID = 692245160052938609L;
+
     /**
      * The X.
      */

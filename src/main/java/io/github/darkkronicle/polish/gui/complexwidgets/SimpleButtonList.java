@@ -91,6 +91,14 @@ public class SimpleButtonList extends AbstractPWidgetList<SimpleButtonList.Entry
         public int getHeight() {
             return height;
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int getWidth() {
+            return width;
+        }
     }
 
     /**

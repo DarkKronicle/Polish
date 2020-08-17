@@ -82,5 +82,11 @@ public class ToggleEntry extends AbstractPEntry<Boolean, ToggleButton> {
         widget.setSelected(value);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getWidth() {
+        return width;
+    }
 }

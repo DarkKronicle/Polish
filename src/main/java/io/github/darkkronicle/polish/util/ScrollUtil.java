@@ -52,6 +52,10 @@ public class ScrollUtil {
         return new DrawPosition(dimensions.x(),  dimensions.y() + (int) Math.round((dimensions.height() - 8) * (scroll / maxScroll) * -1));
     }
 
+    public DrawPosition getSidePos() {
+        return new DrawPosition(dimensions.x() + (int) Math.round((dimensions.width() - 8) * (scroll / maxScroll) * -1),  dimensions.y());
+    }
+
     public void setMaxScroll(double maxScroll) {
         this.maxScroll = maxScroll;
     }

@@ -79,4 +79,11 @@ public class TextboxEntry extends AbstractPEntry<String, TextboxButton> {
         }
         return check;
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getWidth() {
+        return width;
+    }
 }

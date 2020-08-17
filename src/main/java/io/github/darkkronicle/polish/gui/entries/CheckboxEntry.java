@@ -84,4 +84,12 @@ public class CheckboxEntry extends AbstractPEntry<Boolean, CheckboxButton> {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
 }

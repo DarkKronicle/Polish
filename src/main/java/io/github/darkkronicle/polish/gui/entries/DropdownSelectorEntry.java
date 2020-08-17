@@ -77,4 +77,12 @@ public class DropdownSelectorEntry<K> extends AbstractPEntry<K, DropdownSelector
     public void setValue(K value) {
         widget.setCurrent(widget.entryFromObj(value));
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getWidth() {
+        return width;
+    }
 }

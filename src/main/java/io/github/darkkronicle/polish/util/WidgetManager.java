@@ -1,6 +1,7 @@
 package io.github.darkkronicle.polish.util;
 
 import io.github.darkkronicle.polish.gui.widgets.AbstractPWidget;
+import lombok.Getter;
 import lombok.Setter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -23,7 +24,8 @@ public class WidgetManager implements Element, Drawable {
     /**
      * The stored widgets.
      */
-    private ArrayList<Drawable> widgets;
+    @Getter
+    private final ArrayList<Drawable> widgets;
     /**
      * The parent screen
      */
@@ -108,6 +110,21 @@ public class WidgetManager implements Element, Drawable {
                     isTrue = ((AbstractPWidget) widget).mouseScrolled(mouseX, mouseY, amount);
                 } else {
                     ((AbstractPWidget) widget).mouseScrolled(mouseX, mouseY, amount);
+                }
+            }
+        }
+        return isTrue;
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        boolean isTrue = false;
+        for (Drawable widget : widgets) {
+            if (widget instanceof AbstractPWidget) {
+                if (!isTrue) {
+                    isTrue = ((AbstractPWidget) widget).mouseClicked(mouseX, mouseY, button);
+                } else {
+                    ((AbstractPWidget) widget).mouseClicked(mouseX, mouseY, button);
                 }
             }
         }

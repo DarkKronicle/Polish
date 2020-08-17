@@ -1,5 +1,8 @@
 package io.github.darkkronicle.polish;
 
+import io.github.darkkronicle.polish.gui.complexwidgets.SimpleTabList;
+import io.github.darkkronicle.polish.gui.widgets.SimpleButton;
+import io.github.darkkronicle.polish.util.Colors;
 import io.github.darkkronicle.polish.util.WidgetManager;
 import io.github.darkkronicle.polish.api.EntryBuilder;
 import io.github.darkkronicle.polish.gui.complexwidgets.EntryButtonList;
@@ -86,6 +89,21 @@ public class ExampleScreen extends Screen {
         list.addEntry(builder.startFloatSliderEntry(new LiteralText("FloAts"), 1F, 0F, 2F).build(list));
         list.addEntry(builder.startIntSliderEntry(new LiteralText("ints"), 5, 1, 255).build(list));
         list.addEntry(builder.startTextboxEntry(new LiteralText("Names?"), "").build(list));
+
+        SimpleTabList tab = new SimpleTabList(20, 20, 200, 19);
+        tab.addEntry(new SimpleButton(0, 0, 40, 19, Colors.DARKGRAY.color().withAlpha(100), new LiteralText("Hello"), (button -> {
+            System.out.println("bruh");
+        })));
+        tab.addEntry(new SimpleButton(0, 0, 40, 19, Colors.DARKGRAY.color().withAlpha(100), new LiteralText("Nerd"), (button -> {
+            System.out.println("Nerd");
+        })));
+        tab.addEntry(new SimpleButton(0, 0, 40, 19, Colors.DARKGRAY.color().withAlpha(100), new LiteralText("Hello"), (button -> {
+            System.out.println("bruh");
+        })));
+        tab.addEntry(new SimpleButton(0, 0, 40, 19, Colors.DARKGRAY.color().withAlpha(100), new LiteralText("Nerd"), (button -> {
+            System.out.println("Nerd");
+        })));
+        widgetManager.add(tab);
         widgetManager.add(list);
     }
 
