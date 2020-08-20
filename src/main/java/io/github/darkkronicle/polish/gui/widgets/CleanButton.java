@@ -160,7 +160,7 @@ public class CleanButton extends AbstractPWidget {
             DrawUtil.outlineRoundedRect(matrices, scaledX, scaledY, scaledWidth, scaledHeight, 9, borderColor.color());
         }
         matrices.scale(1 / scale, 1 / scale, 1);
-        DrawUtil.drawCenteredText(matrices, client.textRenderer, message, (getAbsoluteX() + (width / 2)), (getAbsoluteY() + (height / 2) - 3), Colors.WHITE.color().color());
+        DrawUtil.drawCenteredText(matrices, client.textRenderer, message.asOrderedText(), (getAbsoluteX() + (width / 2)), (getAbsoluteY() + (height / 2) - 3), Colors.WHITE.color().color());
         matrices.pop();
 
 

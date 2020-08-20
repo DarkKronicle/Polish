@@ -29,9 +29,9 @@ public class TextboxEntry extends AbstractPEntry<String, TextboxButton> {
             widget.render(matrices, mouseX, mouseY, tickDelta, false);
         }
         if (right) {
-            DrawUtil.drawRightText(matrices, client.textRenderer, name, parentList.getAbsoluteX() + relativeX + this.width - 6, widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
+            DrawUtil.drawRightText(matrices, client.textRenderer, name.asOrderedText(), parentList.getAbsoluteX() + relativeX + this.width - 6, widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
         } else {
-            DrawUtil.drawText(matrices, client.textRenderer, name, parentList.getAbsoluteX() + relativeX + 20 + widget.getWidth(), widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
+            DrawUtil.drawText(matrices, client.textRenderer, name.asOrderedText(), parentList.getAbsoluteX() + relativeX + 20 + widget.getWidth(), widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
         }
     }
 

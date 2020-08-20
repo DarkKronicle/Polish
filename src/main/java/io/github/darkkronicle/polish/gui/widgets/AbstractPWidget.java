@@ -8,7 +8,8 @@ import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.util.ChatMessages;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.StringRenderable;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 
 import java.util.List;
@@ -119,9 +120,9 @@ public abstract class AbstractPWidget extends DrawUtil implements Drawable, Elem
     public void renderTooltip(MatrixStack matrices) {
         if (tooltip != null && !tooltip.getString().isEmpty()) {
             rect(matrices, getAbsoluteX() - 20, getAbsoluteY() - 40, width + 40, 40, Colors.DARKGRAY.color().color());
-            List<StringRenderable> lines = ChatMessages.breakRenderedChatMessageLines(tooltip, width + 38, MinecraftClient.getInstance().textRenderer);
+            List<OrderedText> lines = ChatMessages.breakRenderedChatMessageLines(tooltip, width + 38, MinecraftClient.getInstance().textRenderer);
             int lineY = 0;
-            for (StringRenderable line : lines) {
+            for (OrderedText line : lines) {
                 drawCenteredText(matrices, MinecraftClient.getInstance().textRenderer, line, getAbsoluteX() - 18, getAbsoluteY() - 40 + lineY, Colors.WHITE.color().color());
                 lineY += 10;
             }

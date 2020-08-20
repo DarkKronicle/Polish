@@ -26,7 +26,7 @@ public class DropdownSelectorEntry<K> extends AbstractPEntry<K, DropdownSelector
             widget.render(matrices, mouseX, mouseY, tickDelta, false);
         }
 
-        DrawUtil.drawRightText(matrices, client.textRenderer, name, parentList.getAbsoluteX() + relativeX + this.width - 6, widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
+        DrawUtil.drawRightText(matrices, client.textRenderer, name.asOrderedText(), parentList.getAbsoluteX() + relativeX + this.width - 6, widget.getAbsoluteY() + (getHeight() / 2) - 4, Colors.WHITE.color().color());
     }
 
     public static <T> DropdownSelectorEntry<T> createEntry(EntryButtonList list, DropdownSelectorButton<T> button, Text name) {

@@ -83,12 +83,12 @@ public class ToggleButton extends AbstractPWidget {
             SimpleColor color = ColorUtil.blend(red, green, (float) EasingFunctions.Types.LINEAR.apply(trans));
             newX = ColorUtil.blendInt(scaledX + 1 + (scaledWidth - scaledSmallWidth), scaledX + 1, (float) EasingFunctions.Types.LINEAR.apply(trans));
             fillRoundedRect(matrices, newX, scaledY + 1, scaledSmallWidth - 2, scaledHeight - 2, 5, color.color());
-            drawCenteredText(matrices, client.textRenderer, on,newX + (scaledSmallWidth / 2), scaledY + (scaledHeight / 2) - 4, Colors.WHITE.color().color());
+            drawCenteredText(matrices, client.textRenderer, on.asOrderedText(),newX + (scaledSmallWidth / 2), scaledY + (scaledHeight / 2) - 4, Colors.WHITE.color().color());
         } else {
             SimpleColor color = ColorUtil.blend(green, red, (float) EasingFunctions.Types.LINEAR.apply(trans));
             newX = ColorUtil.blendInt(scaledX + 1, scaledX + 1 + (scaledWidth - scaledSmallWidth),  (float) EasingFunctions.Types.LINEAR.apply(trans));
             fillRoundedRect(matrices, newX, scaledY + 1, scaledSmallWidth - 2, scaledHeight - 2, 5, color.color());
-            drawCenteredText(matrices, client.textRenderer, off,newX + (scaledSmallWidth / 2), scaledY + (scaledHeight / 2) - 4, Colors.WHITE.color().color());
+            drawCenteredText(matrices, client.textRenderer, off.asOrderedText(),newX + (scaledSmallWidth / 2), scaledY + (scaledHeight / 2) - 4, Colors.WHITE.color().color());
         }
         if ((Util.getMeasuringTimeMs() - transStart) / moveAnim >= 1) {
             transStart = -1;

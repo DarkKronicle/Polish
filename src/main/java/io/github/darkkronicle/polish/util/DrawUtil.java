@@ -4,11 +4,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.StringRenderable;
+import net.minecraft.text.OrderedText;
 import net.minecraft.util.math.Matrix4f;
 
 import java.util.ArrayList;
@@ -22,29 +23,10 @@ public abstract class DrawUtil {
     // https://github.com/CottonMC/LibGui/blob/65ff902aaf7025f90efb739ab0cca985f2f59c59/src/main/java/io/github/cottonmc/cotton/gui/client/ScreenDrawing.java#L32
 
     public static void rect(MatrixStack matrices, int x, int y, int width, int height, int color) {
-        rect(matrices.peek().getModel(), x, y, width, height, color);
+        DrawableHelper.fill(matrices, x, y, x + width, y + height, color);
     }
 
     public static void rect(Matrix4f matrix, int x, int y, int width, int height, int color) {
-        float a = (color >> 24 & 255) / 255.0F;
-        float r = (color >> 16 & 255) / 255.0F;
-        float g = (color >> 8 & 255) / 255.0F;
-        float b = (color & 255) / 255.0F;
-
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBuffer();
-
-        RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
-        RenderSystem.defaultBlendFunc();
-        bufferBuilder.begin(7, VertexFormats.POSITION_COLOR);
-        bufferBuilder.vertex(matrix, (float)x, (float)y + height, 0.0F).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, (float)x + width, (float)y + height, 0.0F).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, (float)x + width, (float)y, 0.0F).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, (float)x, (float)y, 0.0F).color(r, g, b, a).next();
-        tessellator.draw();
-        RenderSystem.enableTexture();
-        RenderSystem.disableBlend();
     }
 
     public static void pixel(MatrixStack matrixStack, int x, int y, int color) {
@@ -204,15 +186,15 @@ public abstract class DrawUtil {
         textRenderer.drawWithShadow(matrices, text, (float)(x - textRenderer.getWidth(text) / 2), (float)y, color);
     }
 
-    public static void drawCenteredText(MatrixStack matrices, TextRenderer textRenderer, StringRenderable stringRenderable, int x, int y, int color) {
+    public static void drawCenteredText(MatrixStack matrices, TextRenderer textRenderer, OrderedText stringRenderable, int x, int y, int color) {
         textRenderer.drawWithShadow(matrices, stringRenderable, (float)(x - textRenderer.getWidth(stringRenderable) / 2), (float)y, color);
     }
 
-    public static void drawText(MatrixStack matrices, TextRenderer textRenderer, StringRenderable stringRenderable, int x, int y, int color) {
+    public static void drawText(MatrixStack matrices, TextRenderer textRenderer, OrderedText stringRenderable, int x, int y, int color) {
         textRenderer.drawWithShadow(matrices, stringRenderable, x, (float)y, color);
     }
 
-    public static void drawRightText(MatrixStack matrices, TextRenderer textRenderer, StringRenderable stringRenderable, int x, int y, int color) {
+    public static void drawRightText(MatrixStack matrices, TextRenderer textRenderer, OrderedText stringRenderable, int x, int y, int color) {
         textRenderer.drawWithShadow(matrices, stringRenderable, (float) (x - textRenderer.getWidth(stringRenderable)), (float)y, color);
     }
 

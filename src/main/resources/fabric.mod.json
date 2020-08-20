@@ -11,9 +11,7 @@
   "icon": "assets/Polish/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "io.github.darkkronicle.polish.PolishExample"
-    ]
+
   },
   "depends": {
     "fabricloader": ">=0.9.0",
