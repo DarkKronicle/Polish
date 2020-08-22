@@ -130,4 +130,19 @@ public class WidgetManager implements Element, Drawable {
         }
         return isTrue;
     }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+        boolean isTrue = false;
+        for (Drawable widget : widgets) {
+            if (widget instanceof AbstractPWidget) {
+                if (!isTrue) {
+                    isTrue = ((AbstractPWidget) widget).mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+                } else {
+                    ((AbstractPWidget) widget).mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+                }
+            }
+        }
+        return isTrue;
+    }
 }

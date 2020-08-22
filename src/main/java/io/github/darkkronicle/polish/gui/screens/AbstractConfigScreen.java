@@ -67,4 +67,12 @@ public abstract class AbstractConfigScreen extends Screen {
         widgetManager.mouseClicked(mouseX, mouseY, button);
         return yes;
     }
+
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+        boolean yes = super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+        widgetManager.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+        return yes;
+    }
 }

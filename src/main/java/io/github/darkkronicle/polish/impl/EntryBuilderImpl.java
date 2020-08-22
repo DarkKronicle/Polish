@@ -1,12 +1,16 @@
 package io.github.darkkronicle.polish.impl;
 
 import io.github.darkkronicle.polish.api.EntryBuilder;
+import io.github.darkkronicle.polish.gui.widgets.CleanButton;
 import io.github.darkkronicle.polish.impl.builders.CheckboxEntryBuilder;
+import io.github.darkkronicle.polish.impl.builders.CleanButtonEntryBuilder;
+import io.github.darkkronicle.polish.impl.builders.ColorButtonEntryBuilder;
 import io.github.darkkronicle.polish.impl.builders.DropdownSelectorEntryBuilder;
 import io.github.darkkronicle.polish.impl.builders.FloatSliderEntryBuilder;
 import io.github.darkkronicle.polish.impl.builders.IntSliderEntryBuilder;
 import io.github.darkkronicle.polish.impl.builders.TextboxEntryBuilder;
 import io.github.darkkronicle.polish.impl.builders.ToggleEntryBuilder;
+import io.github.darkkronicle.polish.util.SimpleColor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.text.Text;
@@ -42,5 +46,15 @@ public class EntryBuilderImpl implements EntryBuilder {
     @Override
     public TextboxEntryBuilder startTextboxEntry(Text name, String value) {
         return new TextboxEntryBuilder(name, value);
+    }
+
+    @Override
+    public CleanButtonEntryBuilder startCleanButtonEntry(Text name, Text buttonName, CleanButton.OnPress onPress) {
+        return new CleanButtonEntryBuilder(name, buttonName, onPress);
+    }
+
+    @Override
+    public ColorButtonEntryBuilder startColorButtonEntry(Text name, SimpleColor color) {
+        return new ColorButtonEntryBuilder(name, color);
     }
 }

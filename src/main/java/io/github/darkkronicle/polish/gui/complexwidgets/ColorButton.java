@@ -41,19 +41,19 @@ public class ColorButton extends AbstractPComplexWidget {
      * @param y               the y
      * @param backgroundColor the background color
      */
-    public ColorButton(int x, int y, SimpleColor backgroundColor) {
+    public ColorButton(int x, int y, SimpleColor color) {
         super(x, y, 120, 50);
         this.client = MinecraftClient.getInstance();
-        r = new IntSliderButton(getAbsoluteX() , getAbsoluteY(), 80, 100, 0, 255);
+        r = new IntSliderButton(getAbsoluteX() , getAbsoluteY(), 80, color.red(), 0, 255);
         r.setRelativePos(30, 2);
-        g = new IntSliderButton(getAbsoluteX() , getAbsoluteY(), 80, 100, 0, 255);
+        g = new IntSliderButton(getAbsoluteX() , getAbsoluteY(), 80, color.green(), 0, 255);
         g.setRelativePos(30, 14);
-        b = new IntSliderButton(getAbsoluteX() , getAbsoluteY(), 80, 100, 0, 255);
+        b = new IntSliderButton(getAbsoluteX() , getAbsoluteY(), 80, color.blue(), 0, 255);
         b.setRelativePos(30, 26);
-        a = new IntSliderButton(getAbsoluteX() , getAbsoluteY(), 80, 100, 0, 255);
+        a = new IntSliderButton(getAbsoluteX() , getAbsoluteY(), 80, color.alpha(), 0, 255);
         a.setRelativePos(30, 38);
         add(r).add(g).add(b).add(a);
-        this.backgroundColor = backgroundColor;
+        this.backgroundColor = Colors.BLACK.color().withAlpha(50);
     }
 
     /**
@@ -67,6 +67,27 @@ public class ColorButton extends AbstractPComplexWidget {
         int bNum = b.getRawValue();
         int aNum = a.getRawValue();
         return new SimpleColor(rNum, gNum, bNum, aNum);
+    }
+
+    @Override
+    public void setRelativePos(int x, int y) {
+        super.setRelativePos(x, y);
+        r.setRelativePos(30 + x, 2 + y);
+        g.setRelativePos(30 + x, 14 + y);
+        b.setRelativePos(30 + x, 26 + y);
+        a.setRelativePos(30 + x, 38 + y);
+    }
+
+    /**
+     * Sets the widget's color
+     *
+     * @param color - What it sets to
+     */
+    public void setColor(SimpleColor color) {
+        r.setRawValue(color.red());
+        g.setRawValue(color.green());
+        b.setRawValue(color.blue());
+        a.setRawValue(color.alpha());
     }
 
     /**

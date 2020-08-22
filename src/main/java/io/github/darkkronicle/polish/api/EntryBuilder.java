@@ -1,12 +1,16 @@
 package io.github.darkkronicle.polish.api;
 
+import io.github.darkkronicle.polish.gui.widgets.CleanButton;
 import io.github.darkkronicle.polish.impl.builders.CheckboxEntryBuilder;
+import io.github.darkkronicle.polish.impl.builders.CleanButtonEntryBuilder;
+import io.github.darkkronicle.polish.impl.builders.ColorButtonEntryBuilder;
 import io.github.darkkronicle.polish.impl.builders.DropdownSelectorEntryBuilder;
 import io.github.darkkronicle.polish.impl.builders.FloatSliderEntryBuilder;
 import io.github.darkkronicle.polish.impl.builders.IntSliderEntryBuilder;
 import io.github.darkkronicle.polish.impl.builders.TextboxEntryBuilder;
 import io.github.darkkronicle.polish.impl.EntryBuilderImpl;
 import io.github.darkkronicle.polish.impl.builders.ToggleEntryBuilder;
+import io.github.darkkronicle.polish.util.SimpleColor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.text.Text;
@@ -31,4 +35,7 @@ public interface EntryBuilder {
 
     TextboxEntryBuilder startTextboxEntry(Text name, String value);
 
+    CleanButtonEntryBuilder startCleanButtonEntry(Text name, Text buttonName, CleanButton.OnPress onPress);
+
+    ColorButtonEntryBuilder startColorButtonEntry(Text name, SimpleColor color);
 }

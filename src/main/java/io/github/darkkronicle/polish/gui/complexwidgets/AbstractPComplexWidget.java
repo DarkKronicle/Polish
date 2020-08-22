@@ -18,7 +18,7 @@ public class AbstractPComplexWidget extends AbstractPWidget {
 
 
     /**
-     * Instantiates a new Abstract complex widgeth
+     * Instantiates a new Abstract complex width
      *
      * @param x      the x
      * @param y      the y
