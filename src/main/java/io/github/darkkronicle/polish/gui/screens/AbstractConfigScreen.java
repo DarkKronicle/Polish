@@ -10,13 +10,15 @@ public abstract class AbstractConfigScreen extends Screen {
 
     public WidgetManager widgetManager;
     public int x, y, width, height;
+    public Runnable save;
 
-    public AbstractConfigScreen(Text title, int x, int y, int width, int height) {
+    public AbstractConfigScreen(Text title, int x, int y, int width, int height, Runnable save) {
         super(title);
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.save = save;
         widgetManager = new WidgetManager(this, children);
     }
 

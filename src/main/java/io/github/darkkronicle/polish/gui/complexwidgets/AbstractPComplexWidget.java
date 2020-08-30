@@ -14,7 +14,7 @@ public class AbstractPComplexWidget extends AbstractPWidget {
     /**
      * The widgets that it has.
      */
-    private ArrayList<AbstractPWidget> siblings;
+    protected ArrayList<AbstractPWidget> siblings;
 
 
     /**
@@ -44,16 +44,25 @@ public class AbstractPComplexWidget extends AbstractPWidget {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        render(matrices, mouseX, mouseY, delta, calcHover(mouseX, mouseY));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta, boolean hovered) {
+        matrices.push();
         ScissorsHelper.INSTANCE.addScissor(new SimpleRectangle(getAbsoluteX(), getAbsoluteY(), width, height));
-        hovered = calcHover(mouseX, mouseY);
+        this.hovered = hovered;
         renderWidget(matrices, mouseX, mouseY, delta);
         for (AbstractPWidget sibling : siblings) {
             sibling.render(matrices, mouseX, mouseY, delta);
         }
         wasHovered = hovered;
         ScissorsHelper.INSTANCE.removeLastScissor();
+        matrices.pop();
     }
 
     /**
@@ -62,13 +71,14 @@ public class AbstractPComplexWidget extends AbstractPWidget {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == 0 && hovered) {
-            onClick(mouseX, mouseY, button);
+            System.out.println("CLICKED PLEASE");
             for (AbstractPWidget sibling : siblings) {
                 if (sibling.isHovered()) {
                     sibling.onClick(mouseX, mouseY, button);
                     return true;
                 }
             }
+            onClick(mouseX, mouseY, button);
             return true;
         }
         return false;

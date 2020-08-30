@@ -55,7 +55,7 @@ public class SimpleButtonList extends AbstractPWidgetList<SimpleButtonList.Entry
     /**
      * A button entry
      */
-    public class ButtonEntry extends Entry {
+    public static class ButtonEntry extends Entry {
 
         /**
          * Instantiates a new Button entry.

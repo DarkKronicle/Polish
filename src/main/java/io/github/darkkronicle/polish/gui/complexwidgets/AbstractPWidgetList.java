@@ -76,12 +76,16 @@ public abstract class AbstractPWidgetList<E extends AbstractPWidgetList.Entry> e
         rect(matrices, pos.getX(), pos.getY(), 4, 8, Colors.WHITE.color().withAlpha(100).color());
         int currenty = scrolled;
         ScissorsHelper.INSTANCE.addScissor(new SimpleRectangle(getAbsoluteX() + 2, getAbsoluteY() + 2, width - 2, height - 2));
+        int lastRY = 0;
         for (int i = 0; i < entries.size(); i++) {
             Entry sibling = entries.get(i);
             if (currenty > -1 * sibling.getHeight() && currenty < height + sibling.getHeight()) {
                 sibling.renderEntry(matrices, i, mouseX, mouseY, delta, new SimpleRectangle(getAbsoluteX(), getAbsoluteY(), width, height), scrolled, hovered);
             }
-            currenty = currenty + sibling.getHeight();
+            if (sibling.originalRelativeY != lastRY) {
+                currenty = sibling.originalRelativeY;
+            }
+//            currenty = currenty + sibling.getHeight();
         }
         wasHovered = hovered;
         ScissorsHelper.INSTANCE.removeLastScissor();

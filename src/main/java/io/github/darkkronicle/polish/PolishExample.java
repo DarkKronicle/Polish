@@ -46,7 +46,7 @@ public class PolishExample implements ClientModInitializer {
         list.addEntry(builder.startFloatSliderEntry(new LiteralText("FloAts"), 1F, 0F, 2F).build(list));
         list.addEntry(builder.startIntSliderEntry(new LiteralText("ints"), 5, 1, 255).build(list));
         list.addEntry(builder.startTextboxEntry(new LiteralText("Names?"), "").build(list));
-        Screen screen = new BasicConfigScreen(new LiteralText("Configurations!"), list);
+        Screen screen = new BasicConfigScreen(new LiteralText("Configurations!"), list, () -> System.out.println("Saved"));
         client.openScreen(screen);
     }
 }
