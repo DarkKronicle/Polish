@@ -39,6 +39,7 @@ public class DropdownSelectorEntry<K> extends AbstractPEntry<K, DropdownSelector
         if (list.getColumnCount() <= 1) {
             DropdownSelectorButton<T> newButton = new DropdownSelectorButton<>(list.getAbsoluteX(), list.getAbsoluteY(), button.getWidth(), button.getHeight(), button.arrowWidth, button.getBackgroundColor());
             newButton.addSet(button.getEntrySet());
+            newButton.setCurrent(newButton.entryFromObj(button.getCurrent().getKey()));
             check = new DropdownSelectorEntry<>(0, list.lastY, list.getWidth(), button.getHeight(), newButton, name, list);
         } else {
             if (col == 0) {
@@ -54,6 +55,7 @@ public class DropdownSelectorEntry<K> extends AbstractPEntry<K, DropdownSelector
             int endWidth = Math.round((float) list.getWidth() / list.getColumnCount() * col) - start;
             DropdownSelectorButton<T> newButton = new DropdownSelectorButton<>(list.getAbsoluteX(), list.getAbsoluteY(), button.getWidth(), button.getHeight(), button.arrowWidth, button.getBackgroundColor());
             newButton.addSet(button.getEntrySet());
+            newButton.setCurrent(newButton.entryFromObj(button.getCurrent().getKey()));
             check = new DropdownSelectorEntry<>(start, list.lastY, endWidth, button.getHeight(), newButton, name, list);
         }
         //   list.addEntry(check);

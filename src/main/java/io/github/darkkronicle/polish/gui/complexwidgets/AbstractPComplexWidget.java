@@ -71,7 +71,6 @@ public class AbstractPComplexWidget extends AbstractPWidget {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == 0 && hovered) {
-            System.out.println("CLICKED PLEASE");
             for (AbstractPWidget sibling : siblings) {
                 if (sibling.isHovered()) {
                     sibling.onClick(mouseX, mouseY, button);

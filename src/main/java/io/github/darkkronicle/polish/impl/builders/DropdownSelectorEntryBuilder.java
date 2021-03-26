@@ -8,6 +8,7 @@ import io.github.darkkronicle.polish.util.SimpleColor;
 import net.minecraft.text.Text;
 
 import java.util.LinkedHashMap;
+import java.util.function.Consumer;
 
 public class DropdownSelectorEntryBuilder<K> extends EntryFieldBuilder<K, DropdownSelectorEntry<K>> {
 
@@ -26,10 +27,16 @@ public class DropdownSelectorEntryBuilder<K> extends EntryFieldBuilder<K, Dropdo
         return this;
     }
 
+    public DropdownSelectorEntryBuilder<K> setSavable(Consumer<K> save) {
+        this.saveable = save;
+        return this;
+    }
+
     @Override
     public DropdownSelectorEntry<K> build(EntryButtonList list) {
         DropdownSelectorButton<K> button = new DropdownSelectorButton<>(0, 0, width, height, (int) (height/2) - 5, background);
         button.addSet(entries.entrySet());
+        button.setCurrent(button.entryFromObj(value));
         DropdownSelectorEntry<K> entry = DropdownSelectorEntry.createEntry(list, button, name, columnnum);
         if (defaultValue != null) {
             entry.setDefaultValue(defaultValue);

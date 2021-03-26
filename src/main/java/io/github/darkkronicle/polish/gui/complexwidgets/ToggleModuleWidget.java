@@ -22,40 +22,54 @@ public class ToggleModuleWidget extends AbstractPComplexWidget {
     private float hoverStart = -1;
     private SimpleColor color = Colors.WHITE.color().withAlpha(50);
     private int hoverAnim = 300;
+    private boolean check;
 
     /**
-     * Instantiates a new Abstract complex width
+     * Instantiates a new ToggleModuleWidget
      *
      * @param x      the x
      * @param y      the y
      */
-    public ToggleModuleWidget(int x, int y, Text text, boolean on, OnPress click) {
+    public ToggleModuleWidget(int x, int y, Text text, boolean on, OnPress click, boolean check) {
         super(x, y, 80, 120);
         this.text = text;
-        button = new ToggleButton(getAbsoluteX(), getAbsoluteY(), 25, 10, on);
-        button.setRelativePos((width / 2 - 12), (height / 2 + 30));
+        this.check = check;
+        if (check) {
+            button = new ToggleButton(getAbsoluteX(), getAbsoluteY(), 25, 10, on);
+            button.setRelativePos((width / 2 - 12), (height / 2 + 30));
+            add(button);
+        }
         onClick = click;
-        add(button);
     }
 
     @Override
     public void setRelativePos(int x, int y) {
         super.setRelativePos(x, y);
-        button.setRelativePos((width / 2 - 12) + x, (height / 2 + 30) + y);
+        if (check) {
+            button.setRelativePos((width / 2 - 12) + x, (height / 2 + 30) + y);
+        }
     }
 
     @Override
     public void setOffsetPos(int x, int y) {
         super.setOffsetPos(x, y);
-        button.setOffsetPos(getAbsoluteX(), getAbsoluteY());
+        if (check) {
+            button.setOffsetPos(getAbsoluteX(), getAbsoluteY());
+        }
     }
 
     public boolean getValue() {
-        return button.isSelected();
+        if (check) {
+            return button.isSelected();
+        } else {
+            return true;
+        }
     }
 
     public void setValue(boolean value) {
-        button.setSelected(value);
+        if (check) {
+            button.setSelected(value);
+        }
     }
 
     @Override
